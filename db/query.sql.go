@@ -11,6 +11,50 @@ import (
 	"time"
 )
 
+const createOrder = `-- name: CreateOrder :exec
+INSERT INTO Orders(VisitId, DishId, Rating, ReviewText)
+VALUES (?, ?, ?, ?)
+`
+
+type CreateOrderParams struct {
+	Visitid    sql.NullInt64
+	Dishid     sql.NullInt64
+	Rating     sql.NullFloat64
+	Reviewtext sql.NullString
+}
+
+func (q *Queries) CreateOrder(ctx context.Context, arg CreateOrderParams) error {
+	_, err := q.db.ExecContext(ctx, createOrder,
+		arg.Visitid,
+		arg.Dishid,
+		arg.Rating,
+		arg.Reviewtext,
+	)
+	return err
+}
+
+const createVisit = `-- name: CreateVisit :exec
+INSERT INTO Visit(Date, Time, UserId, RestaurantId)
+VALUES (?, ?, ?, ?)
+`
+
+type CreateVisitParams struct {
+	Date         time.Time
+	Time         interface{}
+	Userid       sql.NullInt64
+	Restaurantid sql.NullInt64
+}
+
+func (q *Queries) CreateVisit(ctx context.Context, arg CreateVisitParams) error {
+	_, err := q.db.ExecContext(ctx, createVisit,
+		arg.Date,
+		arg.Time,
+		arg.Userid,
+		arg.Restaurantid,
+	)
+	return err
+}
+
 const getOrdersForVisit = `-- name: GetOrdersForVisit :many
 SELECT d.Name, o.Rating, o.ReviewText from
     Orders o join Dish d on o.DishId = d.id

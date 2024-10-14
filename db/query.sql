@@ -6,3 +6,11 @@ SELECT id, Date, Time from Visit
 SELECT d.Name, o.Rating, o.ReviewText from
     Orders o join Dish d on o.DishId = d.id
     where o.VisitId = ?;
+
+-- name: CreateVisit :exec
+INSERT INTO Visit(Date, Time, UserId, RestaurantId)
+VALUES (?, ?, ?, ?);
+
+-- name: CreateOrder :exec
+INSERT INTO Orders(VisitId, DishId, Rating, ReviewText)
+VALUES (?, ?, ?, ?);

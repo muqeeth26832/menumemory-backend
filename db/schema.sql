@@ -17,7 +17,7 @@ create table if not exists Restaurant (
 
 create table if not exists Dish (
     id integer primary key autoincrement,
-    Name varchar(255) not null
+    Name varchar(255) unique not null
 );
 
 create table if not exists Visit (
