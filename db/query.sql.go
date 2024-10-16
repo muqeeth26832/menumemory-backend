@@ -128,3 +128,37 @@ func (q *Queries) GetRestaurantHistory(ctx context.Context, arg GetRestaurantHis
 	}
 	return items, nil
 }
+
+const getRestaurantsLike = `-- name: GetRestaurantsLike :many
+SELECT id, name, area, address, mapslink, mapsratingoutof5 FROM Restaurant where Name like ?
+`
+
+func (q *Queries) GetRestaurantsLike(ctx context.Context, name string) ([]Restaurant, error) {
+	rows, err := q.db.QueryContext(ctx, getRestaurantsLike, name)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Restaurant
+	for rows.Next() {
+		var i Restaurant
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Area,
+			&i.Address,
+			&i.Mapslink,
+			&i.Mapsratingoutof5,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}

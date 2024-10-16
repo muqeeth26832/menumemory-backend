@@ -1,13 +1,13 @@
-package menumemory_backend
+package main
 
 import (
 	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	_ "github.com/mattn/go-sqlite3"
 	"menumemory-backend/db"
 	"net/http"
 	"os"
-	"time"
 )
 
 func main() {
@@ -22,20 +22,23 @@ func main() {
 
 	r := gin.Default()
 
-	type PostVisitParams struct {
-		Date         string `json:"date" binding:"required"`
-		RestaurantId int    `json:"restaurant_id" binding:"required"`
-		Time         string `json:"time"`
-	}
-	r.POST("/visits", func(c *gin.Context) {
-		params := PostVisitParams{}
-		err := c.BindJSON(&params)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, "Pong Uwu")
+	})
+
+	r.GET("/restaurants", func(c *gin.Context) {
+		search_term := c.Query("search_term")
+		if search_term == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "search_term is required"})
 		}
 
-		q.CreateVisit(db.CreateVisitParams{
-			Date: time.Now().Format("2006-01-02T15:04:05"),
+		restaurants, err := q.GetRestaurantsLike(c, "%"+search_term+"%")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"restaurants": restaurants,
 		})
 	})
 

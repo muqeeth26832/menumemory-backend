@@ -1,3 +1,6 @@
+-- name: GetRestaurantsLike :many
+SELECT * FROM Restaurant where Name like ?;
+
 -- name: GetRestaurantHistory :many
 SELECT id, Date, Time from Visit
     where UserId = ? and RestaurantId = ?;
