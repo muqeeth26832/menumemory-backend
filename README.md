@@ -4,4 +4,4 @@ Menumemory is an app for jotting down your dining experiences at restaurants. It
 
 This is the backend for the menumemory app. It is built using Go, [gin](https://github.com/gin-gonic/gin) and [sqlc](https://sqlc.dev/)
 
-**Note:** If you are a contributor please refer to CONTRIBUTING.md
+**Note:** If you are a contributor please refer to [CONTRIBUTING.md](https://github.com/acmpesuecc/menumemory-backend/blob/main/CONTRIBUTING.md)
