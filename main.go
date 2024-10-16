@@ -26,6 +26,9 @@ func main() {
 	//Allow all cors origins
 	r.Use(cors.Default())
 
+	r.StaticFile("/openapi.json", "./openapi.json")
+	r.StaticFile("/openapi.yaml", "./openapi.yaml")
+
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, "Pong Uwu")
 	})
