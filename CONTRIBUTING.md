@@ -9,6 +9,10 @@ This project uses
 - [sqlc](https://sqlc.dev/) generated code for making DB calls
 - sqlite as the DB. 
 
+# API Spec
+The API specification can be found in the `openapi.yaml` file which can be visualized using the [Swagger Editor](https://editor.swagger.io/)
+
+You are expected to modify the `openapi.yaml` file to **document the endpoints you have edited/created**
 # Database Schema
 
 <img width="771" alt="image" src="https://github.com/user-attachments/assets/6042db8b-7675-472c-bf6c-71c98bfbd967">
