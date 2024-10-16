@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
 	"menumemory-backend/db"
@@ -21,6 +22,9 @@ func main() {
 	fmt.Println("Finished Database Initialization")
 
 	r := gin.Default()
+
+	//Allow all cors origins
+	r.Use(cors.Default())
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, "Pong Uwu")
