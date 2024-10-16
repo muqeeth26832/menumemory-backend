@@ -61,9 +61,9 @@ jobs:
           api-url: http://localhost:8080 # <- ✏️ update this
           api-spec: openapi.json # <- ✏️ update this
           duration: 60
-      #     sarif-report: mapi.sarif
+          sarif-report: mapi.sarif
 
-      # - name: Upload SARIF file
-      #   uses: github/codeql-action/upload-sarif@v3
-      #   with:
-      #     sarif_file: mapi.sarif
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: mapi.sarif
