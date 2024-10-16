@@ -59,7 +59,7 @@ jobs:
         with:
           mayhem-token: ${{ secrets.MAYHEM_TOKEN }}
           api-url: http://localhost:8080 # <- ✏️ update this
-          api-spec: http://localhost:8080/openapi.json # <- ✏️ update this
+          api-spec: openapi.json # <- ✏️ update this
           duration: 60
       #     sarif-report: mapi.sarif
 
