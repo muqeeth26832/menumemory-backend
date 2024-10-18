@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-func main() {
+func SetupApp() *gin.Engine {
 	fmt.Println("Beginning Database Initialization")
 	db_, err := sql.Open("sqlite3", "warehouse.db")
 	if err != nil {
@@ -30,7 +30,7 @@ func main() {
 	r.StaticFile("/openapi.yaml", "./openapi.yaml")
 
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, "Pong Uwu")
+		c.String(200, "Pong Uwu")
 	})
 
 	r.GET("/restaurants", func(c *gin.Context) {
@@ -48,6 +48,12 @@ func main() {
 			"restaurants": restaurants,
 		})
 	})
+
+	return r
+}
+
+func main() {
+	r := SetupApp()
 
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
