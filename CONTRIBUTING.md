@@ -3,6 +3,11 @@
 1. Please fork this repo (acmpesuecc/Onyx) to your own account and work on your fork of this repo.
 2. Create a PR from your fork to this repo (remember to reference the correct issue in your PR)
 
+# Testing
+- There exists a `main_test.go` file that has unit tests for every endpoint.
+- **For every endpoint that you add/edit, you are expected to add/modify unit tests accordingly**
+- You may use `go test` to run the entire test suite or `go test -run <unit_test_fn_name>` to run a specific unit test
+
 # Architecture
 This project uses 
 - [gin](https://github.com/gin-gonic/gin) as its HTTP library
