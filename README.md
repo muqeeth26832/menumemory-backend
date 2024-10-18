@@ -6,6 +6,8 @@ This is the backend for the menumemory app. It is built using Go, [gin](https://
 
 **Note:** If you are a contributor please refer to [CONTRIBUTING.md](https://github.com/acmpesuecc/menumemory-backend/blob/main/CONTRIBUTING.md)
 
+**Please contact me at +91 8618950413 for any help/queries/assistance**
+
 # How to run
 ```bash
 go mod tidy
