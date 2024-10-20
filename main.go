@@ -3,13 +3,18 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
-	_ "github.com/mattn/go-sqlite3"
 	"menumemory-backend/db"
 	"net/http"
 	"os"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	_ "github.com/mattn/go-sqlite3"
 )
+
+type CreateDishRequest struct {
+	Name string `json:"name" binding:"required"`
+}
 
 func SetupApp() *gin.Engine {
 	fmt.Println("Beginning Database Initialization")
@@ -46,6 +51,24 @@ func SetupApp() *gin.Engine {
 
 		c.JSON(http.StatusOK, gin.H{
 			"restaurants": restaurants,
+		})
+	})
+
+	r.POST("/dishes", func(c *gin.Context) {
+		var req CreateDishRequest
+
+		if err := c.ShouldBindBodyWithJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Name is required"})
+			return
+		}
+
+		dish, err := q.CreateDish(c, req.Name)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"dish": dish,
 		})
 	})
 

@@ -17,7 +17,7 @@ paths:
       summary: Check if API is alive
       description: Returns a Pong message to indicate that the backend API is live and running
       responses:
-        '200':
+        "200":
           description: Server is alive
   /restaurants:
     get:
@@ -33,12 +33,49 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: "Successful operation"
           content:
             application/json:
               schema:
                 type: string
-        '400':
+        "400":
           description: "search_term was not sent"
-
+  /dishes:
+    post:
+      tags:
+        - dishes
+      summary: Create a new dish
+      description: Creates a new dish in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the dish
+                  example: "Spaghetti Carbonara"
+      responses:
+        "200":
+          description: Successfully created the dish
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dish:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The ID of the created dish
+                      name:
+                        type: string
+                        description: The name of the created dish
+        "400":
+          description: Name is required
+        "500":
+          description: Internal server error

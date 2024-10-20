@@ -2,12 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 )
 
 var router *gin.Engine
@@ -56,4 +57,28 @@ func TestGetRestaurants(t *testing.T) {
 	for _, restaurant := range response.Restaurants {
 		assert.Contains(t, strings.ToLower(restaurant.Name), "milano")
 	}
+}
+
+func TestCreateDish(t *testing.T) {
+	// Define the request payload
+	payload := `{"name": "Test Dish"}`
+	req, _ := http.NewRequest("POST", "/dishes", strings.NewReader(payload))
+	req.Header.Set("Content-Type", "application/json")
+	// Perform the request using the router set up in TestMain
+	resp := httptest.NewRecorder()
+	router.ServeHTTP(resp, req)
+	// Check the response status
+	assert.Equal(t, http.StatusOK, resp.Code)
+	// Check the response body for expected fields
+	var response struct {
+		Dish struct {
+			ID   int    `json:"id"`
+			Name string `json:"name"`
+		} `json:"dish"`
+	}
+	err := json.NewDecoder(resp.Body).Decode(&response)
+	assert.NoError(t, err)
+
+	// Check if the response matches the expected values
+	assert.Equal(t, "Test Dish", response.Dish.Name)
 }

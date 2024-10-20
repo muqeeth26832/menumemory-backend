@@ -17,3 +17,8 @@ VALUES (?, ?, ?, ?);
 -- name: CreateOrder :exec
 INSERT INTO Orders(VisitId, DishId, Rating, ReviewText)
 VALUES (?, ?, ?, ?);
+
+-- name: CreateDish :one
+INSERT INTO Dish(name)
+VALUES (?)
+RETURNING id,Name;
